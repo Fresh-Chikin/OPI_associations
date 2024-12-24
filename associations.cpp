@@ -11,6 +11,113 @@
 #include <fstream>
 using namespace std;
 
+void maxScaleConsole()
+{
+    HWND Hwnd = GetForegroundWindow();
+    ShowWindow(Hwnd, SW_MAXIMIZE);
+} //полноэкранный режим
+
+
+int getConsoleWidth()
+{
+    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+
+    CONSOLE_SCREEN_BUFFER_INFO csbi;
+    GetConsoleScreenBufferInfo(hConsole, &csbi);
+
+    return csbi.srWindow.Right - csbi.srWindow.Left + 1;
+} //нахождение длины консоли
+
+
+void printCentered(const string& text)
+{
+    int width = getConsoleWidth();
+    int padding = (width - text.length()) / 2;
+
+    cout << string(padding, ' ') << text << endl;
+} //текст по центру
+
+
+void beginning()
+{
+    SetConsoleCP(1251);
+    setlocale(LC_ALL, "Russian");
+
+    system("pause>nul");
+
+    maxScaleConsole();
+
+    system("pause>nul");
+    system("cls");
+
+    cout << endl;
+
+    printCentered("    аааа    ссссссс   ссссссс   ооооооо    цц    цц     ии    иии       аааа    цц    цц     ии    иии   ии    иии");
+    printCentered("   аа аа    сс        сс        оо   оо    цц    цц     ии   ииии      аа аа    цц    цц     ии   ииии   ии   ииии");
+    printCentered("  аа  аа    сс        сс        оо   оо    цц    цц     ии иии ии     аа  аа    цц    цц     ии иии ии   ии иии ии");
+    printCentered(" ааааааа    сс        сс        оо   оо    цц    цц     ииии   ии    ааааааа    цц    цц     ииии   ии   ииии   ии");
+    printCentered("аа    аа    ссссссс   ссссссс   ооооооо    цццццццццц   иии    ии   аа    аа    цццццццццц   иии    ии   иии    ии");
+    printCentered("                                                   цц                                   цц                        ");
+
+    cout << endl << endl;
+
+    printCentered("Добро пожаловать в игру! :)");
+    printCentered("Нажмите любой символ для просмотра правил");
+
+    system("pause>nul");
+    system("cls");
+
+    cout << endl;
+
+    printCentered("    !!!!!!!!!!!    ");
+    printCentered("  !!!!!!!!!!!!!!!  ");
+    printCentered(" !!!!!!!!!!!!!!!!! ");
+    printCentered("!!!!!!!!!!!!!!!!!!!");
+    printCentered("!!!!!!!!!!!!!!!!!!!");
+    printCentered(" !!!!!!!!!!!!!!!!! ");
+    printCentered("  !!!!!!!!!!!!!!!  ");
+    printCentered("   !!!!!!!!!!!!!   ");
+    printCentered("    !!!!!!!!!!!    ");
+    printCentered("     !!!!!!!!!     ");
+    printCentered("      !!!!!!!      ");
+    printCentered("       !!!!!       ");
+    printCentered("                   ");
+    printCentered("      !!!!!!!      ");
+    printCentered("      !!!!!!!      ");
+    printCentered("      !!!!!!!      ");
+
+    cout << endl << endl;
+
+    printCentered("*********    *********      ****    *******    **    ***       ****       ****");
+    printCentered("**     **    **     **     ** **    **   **    **   ****      ** **      ** **");
+    printCentered("**     **    *********    **  **    *****      ** **  **     **  **     **  **");
+    printCentered("**     **    **          *******    **   **    ****   **    **   **    *******");
+    printCentered("**     **    **         **    **    *******    ***    **   **    **   **    **");
+
+    cout << endl << endl;
+
+    printCentered("В игре участвуют 2-5 игроков. Игра делится на несколько раундов. Каждый раунд проходит в 2 этапа."); cout << endl << endl;
+    printCentered("Этап 1 - Загадывание.");
+    printCentered("Вам дается слово. Ваша задача:");
+    printCentered("1) Придумать 3 прилагательных-ассоциации к слову. ");
+    printCentered("2) Придумать 3 глагола-ассоциации к слову.        ");
+    printCentered("3) Придумать 3 существительных-ассоциации к слову."); cout << endl << endl;
+    printCentered("Этап 2 - Угадывание.          ");
+    printCentered("У вас есть 3 попытки, чтобы угадать загаданное слово.                    ");
+    printCentered("В каждой попытке вам будут представлены ассоциации к этому слову.        ");
+    printCentered("Ваша задача - угадать загаданное слово за наименьшее количество попыток. ");
+    printCentered("Если вы угадали слово с 1-ой попытки, то вы получаете 3 очка; если со 2-ой попытки - вы получаете 2 очка.              ");
+    printCentered("Если вы угадали слово с 3-ей попытки, то вы получаете 1 очко, и игрок, загадавший слово, также получает 1 очко.        ");
+    printCentered("Если вы и с 3-ей попытки не угадали слово, то у игрока, загадавшего слово, отнимается 1 очко                           ");
+    cout << endl << endl;
+    printCentered("Игра длится до тех пор, пока хотя бы один из игроков не наберет 15 очков."); cout << endl;
+    printCentered("УДАЧИ В ИГРЕ!!! ;)");
+
+    system("pause>nul");
+    system("cls");
+}
+
+
 string word;
 string gword;
 int n;  // Количество игроков
@@ -27,7 +134,7 @@ int proverkaInt() {
             break;
         }
         else {
-            printf("Некорректный ввод! Попробуйте снова\n");
+            printf("    Некорректный ввод! Попробуйте снова\n");
             while (getchar() != '\n');
         }
     }
@@ -56,17 +163,19 @@ void arrShift(int arr[], int len) {
 
 // Вывод очков
 void ScorePrint() {
+    cout << "Итоги раунда: " << endl;
     for (int i = 0; i < n; i++) {
-        cout << "Очки игрока номер " << i + 1 << ": " << score[i] << '\n';
+        cout << "   Очки игрока номер " << i + 1 << ": " << score[i] << '\n';
     }
 }
 
 // Функция для введения количества игроков
 void CountOfPlayers() {
-    cout << "Введите количество игроков (от 2 до 5): ";
+    cout << endl;
+    cout << "   Введите количество игроков (от 2 до 5): ";
     n = proverkaInt();
     while (n < 2 || n > 5) {
-        cout << "Недопустимое число игроков\n";
+        cout << "   Недопустимое число игроков\n";
         n = proverkaInt();
     }
     score.resize(n, 0);  // Инициализация вектора для хранения очков игроков
@@ -99,7 +208,7 @@ string toLowerCase(const string& word)
 
 // Ввод отгадываемых слов
 void guessword() {
-    cout << "Введите слово: ";
+    cout << "   Введите слово: ";
     cin >> gword;
     gword = toLowerCase(gword);
 }
@@ -122,7 +231,7 @@ void vocabulary() {
     // Пока слово уже использовано, генерировать новое
     usedWords.insert(word);
     UsedWordsIndex.push_back(randomIndex);
-    cout << "Ваше слово: " << word << endl;
+    cout << "\n   Ваше слово: # " << word << " #\n" << endl;
 }
 
 // Функция для проверки корректности ввода
@@ -167,7 +276,7 @@ int check(int i, int b) {
     counter++;
 
     if (counter != 3) {
-        cout << "Вы ввели неправильное количество слов!\n";
+        cout << "   Вы ввели неправильное количество слов!\n";
         return 1;
     }
     else {
@@ -175,27 +284,21 @@ int check(int i, int b) {
     }
 }
 
-// Функция для угадывания
-void guessing() {
-    int answer;
-    cout << "Если Вы довольны ответами игроков, нажмите 1" << endl << "Если нет, нажмите 0" << endl;
-    cin >> answer;
-    if (answer == 1)
-        cout << "Слово отгадано" << endl;
-    else if (answer == 0)
-        cout << "Игроки не смогли отгадать слово" << endl;
-}
+
+
 
 // Функция для ввода ассоциаций каждым игроком
 void create_associations() {
     getchar();
     for (int i = 0; i < n; i++) {
-        cout << "Игрок " << i + 1 << endl;
+        cout << "   Игрок " << i + 1 << ", приготовьтесь загадывать!" << endl;
+        cout << "   Нажмите любую клавишу для продолжения" << endl;
+        system("pause>nul");
         vocabulary();
         guessingWords[i] = word;
         bool is_input_true = true; // остается true если игрок ввел неправильное количество слов
         while (is_input_true) {
-            cout << "Придумайте 3 прилагательных к слову и введите их в строку через пробел\n";
+            cout << "   Придумайте 3 прилагательных к слову и введите их в строку через пробел\n";
 
             getline(cin, associations_0[i][0]);
 
@@ -204,7 +307,7 @@ void create_associations() {
 
         is_input_true = true;
         while (is_input_true) {
-            cout << "Придумайте 3 глагола к слову и введите их в строку через пробел\n";
+            cout << "   Придумайте 3 глагола к слову и введите их в строку через пробел\n";
             getline(cin, associations_0[i][1]);
 
             is_input_true = check(i, 1);
@@ -212,7 +315,7 @@ void create_associations() {
 
         is_input_true = true;
         while (is_input_true) {
-            cout << "Придумайте 3 существительных к слову и введите их в строку через пробел\n";
+            cout << "   Придумайте 3 существительных к слову и введите их в строку через пробел\n";
             getline(cin, associations_0[i][2]);
             is_input_true = check(i, 2);
         }
@@ -224,37 +327,49 @@ void create_associations() {
 // Функция для вывода ассоциаций, угадывания, подсчёта очков
 void OutputAssociations(int order[]) {
     for (int i = 0; i < n; i++) {
-        cout << "Сейчас играет игрок номер " << i + 1 << '\n';
-        cout << "Угадай слово игрока номер " << order[i] + 1 << '\n';
-        cout << "Ассоциации игрока (прилагательные) " << order[i] + 1 << ": " << associations_0[order[i]][0] << endl;
+        cout << endl;
+        cout << "   Сейчас играет игрок номер " << i + 1 << '\n';
+        cout << "   Нажмите любую клавишу для продолжения";
+        system("pause>nul");
+        cout << endl<< "   Угадай слово игрока номер " << order[i] + 1 << '\n';
+        cout << "   Ассоциации игрока номер " << order[i] + 1 << " (прилагательные) " << ": " << associations_0[order[i]][0] << endl;
         guessword();
         word = guessingWords[order[i]];
         if (gword == word) {
-            cout << "Вы победили и получили 3 очка" << endl;
+            cout << endl;
+            cout << "   Вы угадали и получили 3 очка" << endl;
             score[i] += 3;
+            cout << "   Нажмите любую клавишу для продолжения";
+            system("pause>nul");
         }
         else {
-            cout << "Неправильно!\nАссоциации игрока (глаголы) " << order[i] + 1 << ": " << associations_0[order[i]][1] << endl;
+            cout << "   Неправильно!\n  Ассоциации игрока (глаголы) " << order[i] + 1 << ": " << associations_0[order[i]][1] << endl;
             guessword();
             if (gword == word) {
-                cout << "Вы победили и получили 2 очка" << endl;
+                cout << "   Вы угадали и получили 2 очка" << endl;
                 score[i] += 2;
+                cout << "   Нажмите любую клавишу для продолжения";
+                system("pause>nul");
             }
             else {
-                cout << "Неправильно!\nАссоциации игрока (существительные) " << order[i] + 1 << ": " << associations_0[order[i]][2] << endl;
+                cout << "   Неправильно!\n  Ассоциации игрока (существительные) " << order[i] + 1 << ": " << associations_0[order[i]][2] << endl;
                 guessword();
                 if (gword == word) {
-                    cout << "Вы победили и получили 1 очко" << endl;
+                    cout << "   Вы угадали и получили 1 очко" << endl;
                     score[i] += 1;
                     score[order[i]] += 1;
+                    cout << "   Нажмите любую клавишу для продолжения";
+                    system("pause>nul");
                 }
                 else {
-                    cout << "Неправильно!\nВы проиграли" << endl;
+                    cout << "   Неправильно!\n  Вы не угадали слово!" << endl;
                     score[order[i]] -= 1;
+                    cout << "   Нажмите любую клавишу для продолжения";
+                    system("pause>nul");
                 }
             }
         }
-        guessing();
+        
         system("cls"); // очистка консоли  
     }
 
@@ -265,7 +380,7 @@ void OutputAssociations(int order[]) {
 bool CheckForEnd() {
 
     for (int i = 0; i < n; i++) {
-        if (score[i] > 15) {
+        if (score[i] >= 15) {
             return true;
         }
     }
@@ -291,32 +406,65 @@ void Game() {
             arrShift(order, n);
         }
         ScorePrint();
-        cout << "Нажмите любую клавишу для продолжения";
+        cout << endl;
+        cout << "   Нажмите любую клавишу для продолжения";
         system("pause>nul");
         system("cls");
     }
     ScorePrint();
     int maxScore = max_of(score, n);
-    cout << "Поздравляем победителя(ей)!!!\n";
+    cout << endl;
+    cout << "   Поздравляем победителя(ей)!!!\n";
     for (int i = 0; i < n; i++) {
         if (score[i] == maxScore) {
-            cout << "Игрок номер " << i + 1 << '\n';
+            cout << "   *Игрок номер " << i + 1 << '\n';
         }
     }
 
-    cout << "Спасибо за игру :)";
-
     delete[] order;
 }
+
+void ending()
+{
+    printCentered("Спасибо за игру :)"); cout << endl;
+
+    printCentered("_______________00000­00000000000_________­_______");
+    printCentered("_____________000___­_____________0000___­_________");
+    printCentered("_________000__________________________00­_________");
+    printCentered("_______00__________­____________________­_0_______");
+    printCentered("_____00________0000­00_______000000_____­___0_____");
+    printCentered("___00_____000000000­0000___000000000000_­____00___");
+    printCentered("__0_____0000_______­_________________000­0_____0__");
+    printCentered("_0_________________­__________000000____­_______0_");
+    printCentered("0__________________­________00______00__­________0");
+    printCentered("0___________000000_­_______00__0000__00_­________0");
+    printCentered("0________0000000000­00_____00_000000_00_­________0");
+    printCentered("0__________________­_______00_000000_00_­________0");
+    printCentered("0__________________­_______00__0000__00_­________0");
+    printCentered("0__________________­________00______00__­________0");
+    printCentered("0__________________­__________000000____­________0");
+    printCentered("_0_________________­________________00__­___00__0_");
+    printCentered("__0___________000__­_______________0__0_­__0__0___");
+    printCentered("___0____________000­0______________0__0_­_0__0____");
+    printCentered("_____0____________0­000000_________0__0_­0__0_____");
+    printCentered("_______00__________­_______________0___0­___00000_");
+    printCentered("_________000_______­______________000000­0___0__0_");
+    printCentered("_____________000___­_____________0______­_0__0__0_");
+    printCentered("________________000­000000000000_00__000­0_00_00__");
+    printCentered("___________________­_____________000____­______");
+}
+
 
 int main() {
 
     setlocale(LC_ALL, "Russian");
     SetConsoleCP(1251);
+    beginning();
     CountOfPlayers();
 
     Game();
 
+    ending();
 
     system("pause>nul"); // Эта команда приостанавливает выполнение программы до тех пор, пока пользователь не нажмет клавишу, чтобы он мог увидеть результат 
 }
